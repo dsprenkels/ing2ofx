@@ -35,6 +35,9 @@ import datetime
 import os
 import re
 
+# In the new ING csv format, they replaced the comma with a semicolon.
+DELIMETER = ';'
+
 """ Read the csv file into a list, which is mapped to ofx fields """
 
 
@@ -52,7 +55,7 @@ class CsvFile:
 
         with open(args.csvfile, 'rb') as csvfile:
             # Open the csvfile as a Dictreader
-            csvreader = csv.DictReader(csvfile, delimiter=',', quotechar='"')
+            csvreader = csv.DictReader(csvfile, delimiter=DELIMETER, quotechar='"')
             for row in csvreader:
                 # Map ACCOUNT to "Rekening"
                 account = row['Rekening'].replace(" ", "")
