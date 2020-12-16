@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
 #       ing2ofx.py
@@ -29,11 +29,13 @@ which is now dead.
 The ofx specification can be downloaded from http://www.ofx.net/
 """
 
-import csv
 import argparse
+import csv
 import datetime
+import functools
 import os
 import re
+import sys
 
 # In the new ING csv format, they replaced the comma with a semicolon.
 DELIMETER = ';'
@@ -53,7 +55,7 @@ class CsvFile:
         # Keep track of used IDs to prevent double IDs
         idslist = []
 
-        with open(args.csvfile, 'rb') as csvfile:
+        with open(args.csvfile, 'r') as csvfile:
             # Open the csvfile as a Dictreader
             csvreader = csv.DictReader(csvfile, delimiter=DELIMETER, quotechar='"')
             for row in csvreader:
@@ -253,9 +255,9 @@ class OfxWriter:
 
         if not gui:
             # print some statistics:
-            print "TRANSACTIONS: " + str(len(csv.transactions))
-            print "IN:           " + args.csvfile
-            print "OUT:          " + filename
+            print(f"TRANSACTIONS: {len(csv.transactions)}")
+            print(f"IN:           {args.csvfile}")
+            print(f"OUT:          {filename}")
         else:
             self.stats_transactions = "TRANSACTIONS: " + \
                 str(len(csv.transactions))
